@@ -16,6 +16,20 @@
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 #
 
+UNAME := $(shell uname)
+ARCH  := $(shell uname -m)
+# Here and everywhere if not Linux or Mac then assume Windows
+ifeq ($(filter Linux Darwin, $(UNAME)), )
+    UNAME := Windows
+endif
+
+# Function to convert paths used by make (Unix style) to ones used by the system
+ifeq ($(UNAME),Windows)
+    system_path = $(subst /,\,$1)
+else
+    system_path = $1
+endif
+
 # Function for converting Windows style slashes into Unix style
 slashfix = $(subst \,/,$(1))
 
