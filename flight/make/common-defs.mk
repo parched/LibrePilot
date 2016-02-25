@@ -241,9 +241,9 @@ endif
 
 # Link: create ELF output file from object files.
 ifeq ($(USE_CXX), YES)
-$(eval $(call LINK_CXX_TEMPLATE, $(OUTDIR)/$(TARGET).elf, $(ALLOBJ), $(ALLLIB)))
+$(eval $(call LINK_CXX_TEMPLATE,$(OUTDIR)/$(TARGET).elf,$(ALLOBJ),$(ALLLIB)))
 else
-$(eval $(call LINK_TEMPLATE, $(OUTDIR)/$(TARGET).elf, $(ALLOBJ), $(ALLLIB)))
+$(eval $(call LINK_TEMPLATE,$(OUTDIR)/$(TARGET).elf,$(ALLOBJ),$(ALLLIB)))
 endif
 
 # Assemble: create object files from assembler source files.
