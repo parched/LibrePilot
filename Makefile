@@ -382,6 +382,7 @@ $(DIST_TAR): $(DIST_VER_INFO) .git/index | $(DIST_DIR)
 	@$(ECHO) " SOURCE FOR DISTRIBUTION $(call toprel, $(DIST_TAR))"
 	$(V1) git archive --prefix="$(PACKAGE_NAME)/" -o "$(DIST_TAR)" HEAD
 	$(V1) tar --append --file="$(DIST_TAR)" \
+		--owner=root --group=root --mtime="`git show -s --format=%ci`" \
 		--transform='s,.*version-info.json,$(PACKAGE_NAME)/version-info.json,' \
 		$(call toprel, "$(DIST_VER_INFO)")
 
