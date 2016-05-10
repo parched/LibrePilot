@@ -30,10 +30,10 @@
 #include "coordinateconversions.h"
 #include <stdint.h>
 #include <QDebug>
-#include <math.h>
+#include <QtMath>
 
-#define RAD2DEG (180.0 / M_PI)
-#define DEG2RAD (M_PI / 180.0)
+#define RAD2DEG(rad) qRadiansToDegrees(rad)
+#define DEG2RAD(deg) qDegreesToRadians(deg)
 
 namespace Utils {
 CoordinateConversions::CoordinateConversions()
@@ -48,10 +48,10 @@ void CoordinateConversions::RneFromLLA(double LLA[3], float Rne[3][3])
 {
     float sinLat, sinLon, cosLat, cosLon;
 
-    sinLat    = (float)sin(DEG2RAD * LLA[0]);
-    sinLon    = (float)sin(DEG2RAD * LLA[1]);
-    cosLat    = (float)cos(DEG2RAD * LLA[0]);
-    cosLon    = (float)cos(DEG2RAD * LLA[1]);
+    sinLat    = (float)sin(DEG2RAD(LLA[0]));
+    sinLon    = (float)sin(DEG2RAD(LLA[1]));
+    cosLat    = (float)cos(DEG2RAD(LLA[0]));
+    cosLon    = (float)cos(DEG2RAD(LLA[1]));
 
     Rne[0][0] = -sinLat * cosLon; Rne[0][1] = -sinLat * sinLon; Rne[0][2] = cosLat;
     Rne[1][0] = -sinLon; Rne[1][1] = cosLon; Rne[1][2] = 0;
@@ -70,10 +70,10 @@ void CoordinateConversions::LLA2ECEF(double LLA[3], double ECEF[3])
     double sinLat, sinLon, cosLat, cosLon;
     double N;
 
-    sinLat = sin(DEG2RAD * LLA[0]);
-    sinLon = sin(DEG2RAD * LLA[1]);
-    cosLat = cos(DEG2RAD * LLA[0]);
-    cosLon = cos(DEG2RAD * LLA[1]);
+    sinLat = sin(DEG2RAD(LLA[0]));
+    sinLon = sin(DEG2RAD(LLA[1]));
+    cosLat = cos(DEG2RAD(LLA[0]));
+    cosLon = cos(DEG2RAD(LLA[1]));
 
     N = a / sqrt(1.0 - e * e * sinLat * sinLat); // prime vertical radius of curvature
 
@@ -95,7 +95,7 @@ int CoordinateConversions::ECEF2LLA(double ECEF[3], double LLA[3])
     double Lat, N, NplusH, delta, esLat;
     uint16_t iter;
 
-    LLA[1] = RAD2DEG * atan2(y, x);
+    LLA[1] = RAD2DEG(atan2(y, x));
     N = a;
     NplusH = N;
     delta  = 1;
@@ -111,7 +111,7 @@ int CoordinateConversions::ECEF2LLA(double ECEF[3], double LLA[3])
         iter  += 1;
     }
 
-    LLA[0] = RAD2DEG * Lat;
+    LLA[0] = RAD2DEG(Lat);
     LLA[2] = NplusH - N;
 
     if (iter == 500) {
@@ -163,8 +163,8 @@ int CoordinateConversions::NED2LLA_HomeLLA(double homeLLA[3], double NED[3], dou
 {
     double T[3];
 
-    T[0] = homeLLA[2] + 6.378137E6f * M_PI / 180.0;
-    T[1] = cosf(homeLLA[0] * M_PI / 180.0) * (homeLLA[2] + 6.378137E6f) * M_PI / 180.0;
+    T[0] = homeLLA[2] + DEG2RAD(6.378137E6f);
+    T[1] = cosf(DEG2RAD(homeLLA[0])) * DEG2RAD(homeLLA[2] + 6.378137E6f);
     T[2] = -1.0f;
 
     position[0] = homeLLA[0] + NED[0] / T[0];
@@ -205,9 +205,9 @@ void CoordinateConversions::Quaternion2RPY(const float q[4], float rpy[3])
     R23    = 2 * (q[2] * q[3] + q[0] * q[1]);
     R33    = q0s - q1s - q2s + q3s;
 
-    rpy[1] = RAD2DEG * asinf(-R13); // pitch always between -pi/2 to pi/2
-    rpy[2] = RAD2DEG * atan2f(R12, R11);
-    rpy[0] = RAD2DEG * atan2f(R23, R33);
+    rpy[1] = RAD2DEG(asinf(-R13)); // pitch always between -pi/2 to pi/2
+    rpy[2] = RAD2DEG(atan2f(R12, R11));
+    rpy[0] = RAD2DEG(atan2f(R23, R33));
 
     // TODO: consider the cases where |R13| ~= 1, |pitch| ~= pi/2
 }
@@ -218,9 +218,9 @@ void CoordinateConversions::RPY2Quaternion(const float rpy[3], float q[4])
     float phi, theta, psi;
     float cphi, sphi, ctheta, stheta, cpsi, spsi;
 
-    phi    = DEG2RAD * rpy[0] / 2;
-    theta  = DEG2RAD * rpy[1] / 2;
-    psi    = DEG2RAD * rpy[2] / 2;
+    phi    = DEG2RAD(rpy[0]) / 2;
+    theta  = DEG2RAD(rpy[1]) / 2;
+    psi    = DEG2RAD(rpy[2]) / 2;
     cphi   = cosf(phi);
     sphi   = sinf(phi);
     ctheta = cosf(theta);

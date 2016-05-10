@@ -33,7 +33,6 @@
 #include "../extensionsystem/pluginmanager.h"
 #include "../../plugins/uavobjects/uavobjectmanager.h"
 #include "../../plugins/uavobjects/uavobject.h"
-#include "math.h"
 
 namespace Utils {
 class QTCREATOR_UTILS_EXPORT CoordinateConversions {

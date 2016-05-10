@@ -47,10 +47,10 @@
 
 #include <stdint.h>
 #include <QDebug>
-#include <math.h>
+#include <QtMath>
 
-#define RAD2DEG(rad) ((rad) * (180.0 / M_PI))
-#define DEG2RAD(deg) ((deg) * (M_PI / 180.0))
+#define RAD2DEG(rad) qRadiansToDegrees(rad)
+#define DEG2RAD(deg) qDegreesToRadians(deg)
 
 // updated coeffs available from http://www.ngdc.noaa.gov/geomag/WMM/wmm_ddownload.shtml
 const double CoeffFile[91][6] = {
