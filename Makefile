@@ -399,6 +399,11 @@ dist_tar_gz: $(DIST_TAR_GZ)
 .PHONY: dist
 dist: dist_tar_gz
 
+echo_path:
+	echo $(PATH)
+	echo middle
+	echo $$PATH
+
 
 $(FW_DIST_TAR): $(PACKAGE_FW_TARGETS) | $(DIST_DIR)
 	@$(ECHO) " FIRMWARE FOR DISTRIBUTION $(call toprel, $(FW_DIST_TAR))"
