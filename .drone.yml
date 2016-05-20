@@ -7,9 +7,7 @@ build:
     - pacman -Syu --noconfirm --noprogressbar --needed git unzip tar mingw-w64-i686-toolchain mingw-w64-i686-ccache mingw-w64-i686-qt5 mingw-w64-i686-SDL mingw-w64-i686-mesa mingw-w64-i686-openssl mingw-w64-i686-gdal-minimal mingw-w64-i686-OpenSceneGraph mingw-w64-i686-osgearth
     - mingw32-make all_sdk_install
     - mingw32-make build-info && cat build/build-info.txt
-    - mingw32-make opfw_resource
-    - mingw32-make gcs
-    - mingw32-make package
+    - git status
 
 clone:
   depth: 1000
