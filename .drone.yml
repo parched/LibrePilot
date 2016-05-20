@@ -3,11 +3,13 @@ build:
   pull: true
   shell: mingw32
   commands:
+    - git status
     - echo -e "[librepilot-mingw]\nSigLevel = Optional TrustAll\nServer = http://download.librepilot.org/repo/mingw" >> /etc/pacman.conf
     - pacman -Syu --noconfirm --noprogressbar --needed git unzip tar mingw-w64-i686-toolchain mingw-w64-i686-ccache mingw-w64-i686-qt5 mingw-w64-i686-SDL mingw-w64-i686-mesa mingw-w64-i686-openssl mingw-w64-i686-gdal-minimal mingw-w64-i686-OpenSceneGraph mingw-w64-i686-osgearth
     - mingw32-make all_sdk_install
     - mingw32-make build-info && cat build/build-info.txt
     - git status
+    - git diff
 
 clone:
   depth: 1000
